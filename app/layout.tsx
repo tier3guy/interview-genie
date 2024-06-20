@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { cn } from "@/lib/utils";
+import Navbar from "@/components/Navbar";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -19,7 +20,13 @@ export default function RootLayout({
     return (
         <html lang="en">
             <ClerkProvider>
-                <body className={cn(font.className, "text-gray-400")}>
+                <body
+                    className={cn(
+                        font.className,
+                        "text-gray-500 px-[5%] w-full overflow-x-hidden overflow-y-auto"
+                    )}
+                >
+                    <Navbar />
                     {children}
                 </body>
             </ClerkProvider>

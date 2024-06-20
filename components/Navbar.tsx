@@ -44,12 +44,16 @@ export default function Navbar() {
     return (
         <nav>
             <div className="py-4 flex items-center justify-between">
-                <Logo />
-                <div className="flex items-center gap-4">
+                <Link href={"/"}>
+                    <Logo />
+                </Link>
+                <div className="flex items-center gap-4 font-medium">
                     {navLinks?.map((navLink) => (
                         <Link href={navLink.href} key={navLink.href}>
                             {navLink.button ? (
-                                <ShimmerButton>{navLink.label}</ShimmerButton>
+                                <button className="py-[5px] bg-green-600/10 text-green-600 px-4 rounded-full border-green-600/20 border">
+                                    {navLink.label}
+                                </button>
                             ) : (
                                 <p>{navLink.label}</p>
                             )}
