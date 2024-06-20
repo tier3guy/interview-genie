@@ -3,12 +3,12 @@
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { jobDescriptions } from "@/constants";
-import getQuestions from "@/actions/getQuestions";
 import { Textarea } from "@/components/ui/textarea";
 import BadgeButton from "@/components/Buttons/Badge";
 import ShimmerButton from "@/components/magicui/shimmer-button";
 import TypingAnimation from "@/components/magicui/typing-animation";
 import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
+import { useMockTest } from "@/providers/MockTestProvider";
 
 const font = BricolageGrotesque({ subsets: ["latin"] });
 
@@ -21,19 +21,7 @@ export default function LaunchInterview() {
         jobRoles[0]
     );
     const [jd, setJd] = useState<string>(jobDescriptions[selectedJobRole]);
-    const [loading, setLoading] = useState<boolean>(false);
-
-    const handleGenerateQuestions = async () => {
-        try {
-            setLoading(true);
-            const resp = await getQuestions({ jobDescription: jd });
-            console.log(resp);
-        } catch (error) {
-            console.log(error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const { loading, generateQuestions } = useMockTest();
 
     useEffect(() => {
         setJd(jobDescriptions[selectedJobRole]);
@@ -41,7 +29,7 @@ export default function LaunchInterview() {
 
     return (
         <main className="py-10">
-            <div className="m-auto w-[50%] flex flex-col items-center justify-center gap-8">
+            <div className="m-auto lg:w-[50%] md:w-[80%] flex flex-col items-center justify-center gap-8">
                 <div className="flex items-center text-center justify-center flex-col">
                     <h1
                         className={cn(
@@ -66,7 +54,7 @@ export default function LaunchInterview() {
                     </div>
                 </div>
             </div>
-            <div className="my-10 w-2/3 m-auto">
+            <div className="my-10 md:w-2/3 m-auto">
                 <Textarea
                     className="h-[500px] resize-none focus-visible:ring-green-600 p-4 text-md"
                     placeholder="Select a job role from above or paste your own job description here."
@@ -82,7 +70,11 @@ export default function LaunchInterview() {
                             className="text-lg font-normal"
                         />
                     ) : (
-                        <ShimmerButton onClick={handleGenerateQuestions}>
+                        <ShimmerButton
+                            onClick={() => {
+                                generateQuestions({ jobDescription: jd });
+                            }}
+                        >
                             <p>Generate Questions</p>
                         </ShimmerButton>
                     )}

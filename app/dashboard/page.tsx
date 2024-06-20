@@ -8,7 +8,7 @@ const font = BricolageGrotesque({ subsets: ["latin"] });
 export default function Dashboard() {
     return (
         <main className="py-10">
-            <div className="m-auto w-[50%] flex flex-col items-center justify-center gap-8">
+            <div className="m-auto lg:w-[50%] md:w-[80%] flex flex-col items-center justify-center gap-8">
                 <div className="flex items-center text-center justify-center flex-col">
                     <h1
                         className={cn(

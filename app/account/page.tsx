@@ -15,7 +15,7 @@ export default function Account() {
 
     return (
         <main className="py-10">
-            <div className="m-auto w-[50%] flex flex-col items-center justify-center gap-8">
+            <div className="m-auto lg:w-[50%] md:w-[80%] flex flex-col items-center justify-center gap-8">
                 <div className="text-center">
                     <h1
                         className={cn(
@@ -81,7 +81,7 @@ export default function Account() {
                             </Link>
                         </div>
                         <p className="font-semibold">Current plan</p>
-                        <div className="border mt-2 p-4 flex items-center justify-between rounded-md">
+                        <div className="border mt-2 p-4 flex flex-col md:flex-row md:items-center gap-8 justify-between rounded-md">
                             <div>
                                 <h2 className="font-bold text-lg text-black">
                                     Basic

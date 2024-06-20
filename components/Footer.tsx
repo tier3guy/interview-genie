@@ -6,9 +6,9 @@ const font = BricolageGrotesque({ subsets: ["latin"] });
 
 export default function Footer() {
     return (
-        <footer className="mt-10 py-14 flex items-center justify-between border-t">
+        <footer className="mt-10 py-14 flex flex-col md:flex-row items-start md:items-center justify-between border-t">
             <Logo />
-            <div className="text-end">
+            <div className="text-center md:text-end mt-4 md:mt-0">
                 <p>
                     Made by{" "}
                     <Link

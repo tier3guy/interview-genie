@@ -2,11 +2,12 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { v4 as uuidv4 } from "uuid";
 import Badge from "@/components/Badge";
-import { ChevronRight, Mic } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import BadgeButton from "@/components/Buttons/Badge";
 import ShimmerButton from "@/components/magicui/shimmer-button";
 import AvatarCircles from "@/components/magicui/avatar-circles";
 import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
+import MicrophoneButton from "@/components/Buttons/MicrophoneButton";
 
 const font = BricolageGrotesque({ subsets: ["latin"] });
 
@@ -27,13 +28,13 @@ export default function Home() {
     ];
 
     return (
-        <section className="flex justify-between items-center py-10 gap-4">
-            <div className="flex-1">
+        <section className="flex flex-col md:flex-row justify-between items-center py-10 gap-4">
+            <div className="flex-1 flex flex-col items-center md:items-start justify-center md:justify-start">
                 <Badge label="#1 AI Interview Prep" />
                 <div className="mt-6">
                     <h1
                         className={cn(
-                            "text-5xl text-black font-bold",
+                            "text-5xl text-black font-bold text-center md:text-start",
                             font.className
                         )}
                     >
@@ -41,7 +42,7 @@ export default function Home() {
                     </h1>
                     <h1
                         className={cn(
-                            "text-5xl text-black font-bold  bg-green-600/10 w-fit p-1 px-3",
+                            "text-5xl text-black font-bold  bg-green-600/10 w-fit p-1 md:px-3 text-center md:text-start",
                             font.className
                         )}
                     >
@@ -50,7 +51,7 @@ export default function Home() {
                 </div>
                 <p
                     className={cn(
-                        "font-semibold mt-4 text-xl w-4/5",
+                        "font-semibold mt-4 text-xl w-4/5 text-center md:text-start",
                         font.className
                     )}
                 >
@@ -64,17 +65,19 @@ export default function Home() {
                             <p>Try now for Free</p>
                         </ShimmerButton>
                     </Link>
-                    <p className="px-2">No credit card required</p>
+                    <p className="px-2 text-center md:text-start">
+                        No credit card required
+                    </p>
                 </div>
 
-                <div className="mt-4 flex items-center gap-4">
+                <div className="mt-4 flex items-center gap-4 flex-col md:flex-row">
                     <AvatarCircles avatarUrls={avatarUrls} />
                     <p className={cn("font-semibold", font.className)}>
                         Trusted by 36,000+ job seekers
                     </p>
                 </div>
             </div>
-            <div className="flex-1 bg-gray-50 rounded p-5 flex flex-col gap-6">
+            <div className="flex-1 bg-gray-50 rounded p-5 flex flex-col gap-6 mt-6 md:mt-0">
                 <div>
                     <h1>
                         Turn a <span>job description</span> into{" "}
@@ -82,7 +85,7 @@ export default function Home() {
                     </h1>
                 </div>
 
-                <div className="flex items-center gap-2 flex-wrap">
+                <div className="flex items-center justify-center md:justify-start gap-2 flex-wrap">
                     {badges.map((label) => (
                         <BadgeButton key={label}>
                             <p>{label}</p>
@@ -98,10 +101,10 @@ export default function Home() {
                             strategies you employed to resolve it?
                         </h1>
                         <div className="mt-10">
-                            <h1 className="text-5xl font-bold">0:00 / 2:00</h1>
-                            <div className="m-auto mt-6 bg-red-700 text-white h-12 w-12 rounded-full grid place-content-center">
-                                <Mic />
-                            </div>
+                            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+                                0:00 / 2:00
+                            </h1>
+                            <MicrophoneButton />
                         </div>
                     </div>
                     <div className="p-4 border-t justify-between items-center flex">

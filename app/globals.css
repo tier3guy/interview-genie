@@ -86,3 +86,11 @@ span {
 ::selection {
     @apply bg-green-700 text-white;
 }
+
+.debug {
+    @apply border-2 border-red-700;
+}
+
+.center {
+    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+}
