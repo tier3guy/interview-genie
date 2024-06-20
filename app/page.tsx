@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { v4 as uuidv4 } from "uuid";
 import Badge from "@/components/Badge";
 import { ChevronRight, Mic } from "lucide-react";
 import BadgeButton from "@/components/Buttons/Badge";
@@ -57,9 +59,11 @@ export default function Home() {
                     improve your answers.
                 </p>
                 <div className="mt-4 flex flex-col gap-2">
-                    <ShimmerButton className="shadow-2xl px-14">
-                        <p>Try now for Free</p>
-                    </ShimmerButton>
+                    <Link href={`/launch/${uuidv4()}`}>
+                        <ShimmerButton className="shadow-2xl px-14 flex items-center gap-2">
+                            <p>Try now for Free</p>
+                        </ShimmerButton>
+                    </Link>
                     <p className="px-2">No credit card required</p>
                 </div>
 

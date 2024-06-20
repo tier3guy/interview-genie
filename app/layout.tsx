@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -28,6 +29,7 @@ export default function RootLayout({
                 >
                     <Navbar />
                     {children}
+                    <Footer />
                 </body>
             </ClerkProvider>
         </html>

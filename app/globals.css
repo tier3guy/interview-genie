@@ -82,3 +82,7 @@ span {
 .gradient {
     @apply bg-gradient-to-r from-emerald-600 to-green-800;
 }
+
+::selection {
+    @apply bg-green-700 text-white;
+}

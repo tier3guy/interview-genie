@@ -1,5 +1,8 @@
 import { cn } from "@/lib/utils";
 import React, { CSSProperties } from "react";
+import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
+
+const font = BricolageGrotesque({ subsets: ["latin"] });
 
 export interface ShimmerButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -42,7 +45,8 @@ const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(
                     "group relative z-0 flex cursor-pointer items-center justify-center overflow-hidden whitespace-nowrap border border-white/10 px-6 py-3 text-white [border-radius:var(--radius)] dark:text-black",
                     "transform-gpu transition-transform duration-300 ease-in-out active:translate-y-[1px] gradient",
                     className,
-                    "w-fit"
+                    "w-fit",
+                    font.className
                 )}
                 ref={ref}
                 {...props}

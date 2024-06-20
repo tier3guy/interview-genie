@@ -1,10 +1,10 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
 import Logo from "./Logo";
 import Link from "next/link";
+import { v4 as uuidv4 } from "uuid";
+import { useUser } from "@clerk/nextjs";
 import NavLinkType from "@/types/nav-link.type";
-import ShimmerButton from "./magicui/shimmer-button";
 
 export default function Navbar() {
     const { isLoaded, user } = useUser();
@@ -36,7 +36,7 @@ export default function Navbar() {
                   },
                   {
                       label: "Launch Interview",
-                      href: "/launch-interview",
+                      href: `/launch/${uuidv4()}`,
                       button: true,
                   },
               ];

@@ -33,7 +33,12 @@ export default function Account() {
                 {isLoaded ? (
                     <div className="w-full flex flex-col gap-2">
                         <div className="flex items-center justify-between">
-                            <h3 className="text-black text-xl font-bold">
+                            <h3
+                                className={cn(
+                                    "text-black text-xl font-bold",
+                                    font.className
+                                )}
+                            >
                                 Profile
                             </h3>
                             <SignOutButton>
@@ -61,7 +66,12 @@ export default function Account() {
                 {isLoaded ? (
                     <div className="w-full flex flex-col gap-2">
                         <div className="flex items-center justify-between">
-                            <h3 className="text-black text-xl font-bold">
+                            <h3
+                                className={cn(
+                                    "text-black text-xl font-bold",
+                                    font.className
+                                )}
+                            >
                                 Plan
                             </h3>
                             <Link href={"/pricing"}>
