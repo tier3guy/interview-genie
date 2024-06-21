@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import AnswerArea from "./AnswerArea";
+import AnswerArea from "../AnswerArea";
 import { useMockTest } from "@/providers/MockTestProvider";
-import QuestionCardAccordion from "./QuestionCardAccordion";
-import ShimmerButton from "./magicui/shimmer-button";
-import TypingAnimation from "./magicui/typing-animation";
+import QuestionCardAccordion from "../QuestionCardAccordion";
+import ShimmerButton from "../magicui/shimmer-button";
+import TypingAnimation from "../magicui/typing-animation";
 
 export default function QuestionCard() {
     const {
