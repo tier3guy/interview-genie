@@ -5,10 +5,10 @@ import { useEffect, useState } from "react";
 import { jobDescriptions } from "@/constants";
 import { Textarea } from "@/components/ui/textarea";
 import BadgeButton from "@/components/Buttons/Badge";
+import { useMockTest } from "@/providers/MockTestProvider";
 import ShimmerButton from "@/components/magicui/shimmer-button";
 import TypingAnimation from "@/components/magicui/typing-animation";
 import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
-import { useMockTest } from "@/providers/MockTestProvider";
 
 const font = BricolageGrotesque({ subsets: ["latin"] });
 

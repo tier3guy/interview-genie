@@ -2,12 +2,13 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { v4 as uuidv4 } from "uuid";
 import Badge from "@/components/Badge";
+import { fakeUsers } from "@/constants";
 import { ChevronRight } from "lucide-react";
 import BadgeButton from "@/components/Buttons/Badge";
 import ShimmerButton from "@/components/magicui/shimmer-button";
 import AvatarCircles from "@/components/magicui/avatar-circles";
-import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
 import MicrophoneButton from "@/components/Buttons/MicrophoneButton";
+import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
 
 const font = BricolageGrotesque({ subsets: ["latin"] });
 
@@ -20,12 +21,7 @@ export default function Home() {
         "Marketing Specialist",
         "Customer Service Representative",
     ];
-
-    const avatarUrls = [
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fHww",
-        "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cGVvcGxlfGVufDB8fDB8fHww",
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHBlb3BsZXxlbnwwfHwwfHx8MA%3D%3D",
-    ];
+    const avatarUrls = fakeUsers.map((user) => user.image);
 
     return (
         <section className="flex flex-col md:flex-row justify-between items-center py-10 gap-4">

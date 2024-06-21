@@ -50,6 +50,14 @@ export default function MockTestProvider({ children }: MockTestProviderProps) {
     }: {
         jobDescription: string;
     }) => {
+        if (!jobDescription) {
+            toast({
+                title: "Failed to Generate Questions.",
+                description: "Please provide the job description.",
+            });
+            return;
+        }
+
         try {
             setLoading(true);
 

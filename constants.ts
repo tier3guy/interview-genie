@@ -150,3 +150,33 @@ export const jobDescriptions = {
         "- Excellent attention to detail.\n" +
         "- Ability to work both independently and as part of a team.",
 };
+
+export const fakeUsers = [
+    {
+        id: 1,
+        name: "Henry Tran",
+        position: "Marketing Operations",
+        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fHww",
+        feedback:
+            "I used your product for an interview I had yesterday, and sure enough one of the generated questions came up",
+        ratings: 5,
+    },
+    {
+        id: 2,
+        name: "Jenny Jiang",
+        position: "Software Engineer",
+        image: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8cGVvcGxlfGVufDB8fDB8fHww",
+        feedback:
+            "Great tool for anyone who's preparing for an interview in tech, helped me ace my interviews!",
+        ratings: 5,
+    },
+    {
+        id: 3,
+        name: "Charles Burr",
+        position: "UX Designer",
+        image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fHww",
+        feedback:
+            "Love interviewsby.ai it's been helping me so much prepping for a big interview tomorrow!",
+        ratings: 5,
+    },
+];
