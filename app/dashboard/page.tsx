@@ -1,6 +1,8 @@
-import ShimmerButton from "@/components/magicui/shimmer-button";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { v4 as uuid4 } from "uuid";
 import { MoveRight } from "lucide-react";
+import ShimmerButton from "@/components/magicui/shimmer-button";
 import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
 
 const font = BricolageGrotesque({ subsets: ["latin"] });
@@ -22,10 +24,12 @@ export default function Dashboard() {
                         Review your previous interviews and feedback.
                     </p>
 
-                    <ShimmerButton className="mt-4 flex items-center gap-2">
-                        Or, Start a new Interview
-                        <MoveRight />
-                    </ShimmerButton>
+                    <Link href={`/launch/${uuid4()}`}>
+                        <ShimmerButton className="mt-4 flex items-center gap-2">
+                            Or, Start a new Interview
+                            <MoveRight />
+                        </ShimmerButton>
+                    </Link>
                 </div>
             </div>
             <div className="py-10">

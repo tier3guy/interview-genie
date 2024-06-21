@@ -11,15 +11,15 @@ import { useMockTest } from "@/providers/MockTestProvider";
 import { useEffect, useState } from "react";
 
 export default function QuestionCardAccordion() {
-    const { currentSolutionData } = useMockTest();
+    const { currentQuestionData } = useMockTest();
     const [openItems, setOpenItems] = useState<string[]>([]);
 
     useEffect(() => {
-        if (currentSolutionData?.feedback)
+        if (currentQuestionData?.feedback)
             setOpenItems((prev) => [...prev, "feedback"]);
-        if (currentSolutionData?.sampleResponse)
+        if (currentQuestionData?.sampleResponse)
             setOpenItems((prev) => [...prev, "sample_response"]);
-    }, [currentSolutionData]);
+    }, [currentQuestionData]);
 
     return (
         <Accordion type="multiple" className={cn("w-full")} value={openItems}>
@@ -29,7 +29,7 @@ export default function QuestionCardAccordion() {
             >
                 <AccordionTrigger>Feedback</AccordionTrigger>
                 <AccordionContent>
-                    {currentSolutionData?.feedback}
+                    {currentQuestionData?.feedback}
                 </AccordionContent>
             </AccordionItem>
             <AccordionItem
@@ -38,7 +38,7 @@ export default function QuestionCardAccordion() {
             >
                 <AccordionTrigger>Sample Response</AccordionTrigger>
                 <AccordionContent>
-                    {currentSolutionData?.sampleResponse}
+                    {currentQuestionData?.sampleResponse}
                 </AccordionContent>
             </AccordionItem>
         </Accordion>

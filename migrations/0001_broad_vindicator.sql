@@ -1,0 +1,1 @@
+ALTER TABLE "tests" ADD COLUMN "testId" text NOT NULL;

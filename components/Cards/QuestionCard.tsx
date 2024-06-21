@@ -13,6 +13,7 @@ export default function QuestionCard() {
         generateFeedback,
         loading,
         currentQuestionIndex,
+        nextQuestion,
     } = useMockTest();
     const [transcript, setTranscript] = useState<string>("");
 
@@ -21,7 +22,7 @@ export default function QuestionCard() {
             return;
         }
         generateFeedback({
-            question: currentQuestionData?.question!,
+            question: currentQuestionData?.question?.question!,
             answer: transcript,
         });
     };
@@ -34,20 +35,29 @@ export default function QuestionCard() {
         <div className="rounded-md border-2 shadow-lg w-full overflow-hidden">
             <div className="p-6 flex flex-col items-center justify-center">
                 <h2 className="text-xl font-bold mb-2 text-center text-black">
-                    {currentQuestionData?.question}
+                    {currentQuestionData?.question.question}
                 </h2>
                 <AnswerArea
                     transcript={transcript}
                     setTranscript={setTranscript}
                 />
-                <button className="cursor-pointer underline m-auto">
-                    Or, record your answer
-                </button>
+                {!currentQuestionData?.isAttempted && (
+                    <button className="cursor-pointer underline m-auto">
+                        Or, record your answer
+                    </button>
+                )}
                 {loading ? (
                     <TypingAnimation
                         text="Working on it ..."
                         className="text-lg font-normal mt-4"
                     />
+                ) : currentQuestionData?.isAttempted ? (
+                    <ShimmerButton
+                        className="mt-4 py-2 px-8 shadow"
+                        onClick={nextQuestion}
+                    >
+                        Next Question
+                    </ShimmerButton>
                 ) : (
                     <ShimmerButton
                         className="mt-4 py-2 px-8 shadow"

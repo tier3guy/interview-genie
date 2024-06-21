@@ -1,7 +1,7 @@
 import QuestionBadge from "@/components/QuestionBadge";
 import QuestionGenerationButton from "@/components/Buttons/QuestionGenerationButton";
 import EndAndReviewButton from "@/components/Buttons/EndAndReviewButton";
-import QuestionCard from "@/components/QuestionCard";
+import QuestionCard from "@/components/Cards/QuestionCard";
 
 export default function Questions() {
     return (

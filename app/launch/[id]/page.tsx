@@ -14,18 +14,23 @@ const font = BricolageGrotesque({ subsets: ["latin"] });
 
 type JobRole = keyof typeof jobDescriptions;
 
-export default function LaunchInterview() {
+export default function LaunchInterview({ params }: any) {
     const jobRoles: JobRole[] = Object.keys(jobDescriptions) as JobRole[];
 
     const [selectedJobRole, setSelectedJobRole] = useState<JobRole>(
         jobRoles[0]
     );
     const [jd, setJd] = useState<string>(jobDescriptions[selectedJobRole]);
-    const { loading, generateQuestions } = useMockTest();
+    const { loading, generateQuestions, setTestId, setTitle } = useMockTest();
 
     useEffect(() => {
+        if (params) setTestId(params.id);
+    }, [params, setTestId]);
+
+    useEffect(() => {
+        setTitle(selectedJobRole);
         setJd(jobDescriptions[selectedJobRole]);
-    }, [selectedJobRole]);
+    }, [selectedJobRole, setTitle]);
 
     return (
         <main className="py-10">

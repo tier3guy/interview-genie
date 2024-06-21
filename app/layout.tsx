@@ -6,6 +6,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import AuthProvider from "@/providers/AuthProvider";
 
 const font = Inter({ subsets: ["latin"] });
 
@@ -31,18 +32,20 @@ export default function RootLayout({
                 />
             </head>
             <ClerkProvider>
-                <body className={cn(font.className)}>
-                    <div
-                        className={cn(
-                            "text-gray-500 px-[5%] w-full overflow-x-hidden overflow-y-auto"
-                        )}
-                    >
-                        <Navbar />
-                        {children}
-                        <Footer />
-                    </div>
-                    <Toaster />
-                </body>
+                <AuthProvider>
+                    <body className={cn(font.className)}>
+                        <div
+                            className={cn(
+                                "text-gray-500 px-[5%] w-full overflow-x-hidden overflow-y-auto"
+                            )}
+                        >
+                            <Navbar />
+                            {children}
+                            <Footer />
+                        </div>
+                        <Toaster />
+                    </body>
+                </AuthProvider>
             </ClerkProvider>
         </html>
     );

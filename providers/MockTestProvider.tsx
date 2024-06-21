@@ -3,12 +3,28 @@ import QuestionType from "@/types/question.type";
 import callGemini from "@/actions/callGemini";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter, usePathname } from "next/navigation";
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+    createContext,
+    useContext,
+    useState,
+    ReactNode,
+    useEffect,
+} from "react";
 import YourAnswerType from "@/types/your-answer.type";
+import { createTest, getTestById, updateTestField } from "@/actions/tests";
+import { useAuth } from "./AuthProvider";
+
+interface extendedQuestionType {
+    question: QuestionType;
+    answer: string;
+    feedback: string;
+    sampleResponse: string;
+    isAttempted: boolean;
+}
 
 // context type interface
 interface MockTestContextType {
-    questions: QuestionType[];
+    questions: extendedQuestionType[];
     currentQuestionIndex: number;
     generateQuestions: ({ jobDescription }: { jobDescription: string }) => void;
     generateFeedback: ({
@@ -21,10 +37,11 @@ interface MockTestContextType {
     nextQuestion: () => void;
     loading: boolean;
     questionNumber: number;
-    currentQuestionData: QuestionType | null;
-    yourAnswers: YourAnswerType[];
-    setYourAnswers: React.Dispatch<React.SetStateAction<YourAnswerType[]>>;
-    currentSolutionData: YourAnswerType;
+    currentQuestionData: extendedQuestionType | null;
+    testId: string;
+    setTestId: React.Dispatch<React.SetStateAction<string>>;
+    title: string;
+    setTitle: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const MockTestContext = createContext<MockTestContextType | undefined>(
@@ -37,19 +54,22 @@ interface MockTestProviderProps {
 }
 
 export default function MockTestProvider({ children }: MockTestProviderProps) {
+    const { user } = useAuth();
     const router = useRouter();
     const { toast } = useToast();
     const pathname = usePathname();
+    const [testId, setTestId] = useState<string>("");
+    const [title, setTitle] = useState<string>("");
     const [loading, setLoading] = useState<boolean>(false);
-    const [questions, setQuestions] = useState<QuestionType[]>([]);
+    const [questions, setQuestions] = useState<extendedQuestionType[]>([]);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-    const [yourAnswers, setYourAnswers] = useState<YourAnswerType[]>([]);
 
     const generateQuestions = async ({
         jobDescription,
     }: {
         jobDescription: string;
     }) => {
+        if (!testId) return;
         if (!jobDescription) {
             toast({
                 title: "Failed to Generate Questions.",
@@ -63,21 +83,28 @@ export default function MockTestProvider({ children }: MockTestProviderProps) {
 
             const prompt = `${jobDescription} \n\nFor the above Job Description, kindly prepare the possible questionaries that can be asked in an interview considering the fact that the candidate is of Mid-senior Level for this position. Output the data in an JSON format which will contain an array of questions where each element of the array will be an object with id, question and topic_name in it.`;
 
-            const resp = await callGemini({
-                prompt,
-            });
-            setQuestions(resp);
-            setYourAnswers(
-                resp.map((question: QuestionType) => ({
-                    question,
-                    answer: "",
-                    feedback: "",
-                    sampleResponse: "",
-                    isAttempted: false,
-                }))
-            );
+            const resp = await callGemini({ prompt });
+            const questions = resp.map((question: QuestionType) => ({
+                question,
+                answer: "",
+                feedback: "",
+                sampleResponse: "",
+                isAttempted: false,
+            }));
 
-            router.push(`${pathname}/questions`);
+            createTest({
+                testId,
+                title,
+                jobDescription,
+                questions,
+                summary: {},
+                clerkId: user?.clerkId!,
+            }).then(() => {
+                getTestById(testId).then((data) => {
+                    setQuestions(data?.questions || []);
+                    router.push(`${pathname}/questions`);
+                });
+            });
         } catch (error) {
             console.log(error);
             toast({
@@ -105,18 +132,18 @@ export default function MockTestProvider({ children }: MockTestProviderProps) {
                 prompt,
             });
 
-            setYourAnswers((prev) => {
-                const updatedAnswers = prev;
-                updatedAnswers[currentQuestionIndex] = {
-                    question: questions[currentQuestionIndex],
-                    answer,
-                    feedback: resp.feedback,
-                    sampleResponse: resp.sample_response,
-                    isAttempted: true,
-                };
+            const qData = questions[currentQuestionIndex].question;
+            const updatedQuestions = questions;
+            updatedQuestions[currentQuestionIndex] = {
+                question: qData,
+                answer,
+                feedback: resp.feedback,
+                sampleResponse: resp.sample_response,
+                isAttempted: true,
+            };
 
-                return updatedAnswers;
-            });
+            await updateTestField(testId, "questions", updatedQuestions);
+            setQuestions(updatedQuestions);
         } catch (error) {
             console.log(error);
             toast({
@@ -133,23 +160,26 @@ export default function MockTestProvider({ children }: MockTestProviderProps) {
         setCurrentQuestionIndex((prevIndex) => prevIndex + 1);
     };
 
-    const value = {
-        questions,
-        generateQuestions,
-        currentQuestionIndex,
-        nextQuestion,
-        loading,
-        questionNumber: currentQuestionIndex + 1,
-        currentQuestionData:
-            questions.length > 0 ? questions[currentQuestionIndex] : null,
-        yourAnswers,
-        setYourAnswers,
-        currentSolutionData: yourAnswers[currentQuestionIndex],
-        generateFeedback,
-    };
-
     return (
-        <MockTestContext.Provider value={value}>
+        <MockTestContext.Provider
+            value={{
+                questions,
+                generateQuestions,
+                currentQuestionIndex,
+                nextQuestion,
+                loading,
+                questionNumber: currentQuestionIndex + 1,
+                currentQuestionData:
+                    questions.length > 0
+                        ? questions[currentQuestionIndex]
+                        : null,
+                generateFeedback,
+                testId,
+                setTestId,
+                title,
+                setTitle,
+            }}
+        >
             {children}
         </MockTestContext.Provider>
     );
