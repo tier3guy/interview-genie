@@ -1,36 +1,88 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# AI Interview Platform
+
+Welcome to the AI Interview Platform, an AI-driven tool designed to help you prepare for job interviews by generating questions based on job descriptions and providing feedback on your answers. This project is a clone of [Interviews by AI](https://interviewsby.ai/), an excellent platform for AI-powered interview preparation.
+
+## Features
+
+-   **AI-Generated Questions**: Select a job description and get AI-generated questions tailored to that role.
+-   **Instant Feedback**: Receive immediate feedback on your responses along with sample answers.
+-   **Interview Summary**: Get a summary of your interview performance, including an assessment of your answers.
+
+## Technology Stack
+
+-   **Framework**: Next.js
+-   **Language**: TypeScript
+-   **Styling**: Tailwind CSS, ShadCN
+-   **ORM**: Drizzle ORM
+-   **Database**: Neon PostgreSQL
+-   **AI Integration**: Bard AI
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+-   Node.js
+-   PostgreSQL
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Clone the repository:
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+    ```bash
+    git clone https://github.com/tier3guy/interview-genie
+    cd interview-genie
+    ```
 
-## Learn More
+2. Install dependencies:
 
-To learn more about Next.js, take a look at the following resources:
+    ```bash
+    npm install
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. Set up the PostgreSQL database:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    ```bash
+    # Create a new database
+    createdb ai_interview_platform
 
-## Deploy on Vercel
+    # Run database migrations
+    npm run migrate
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. Create a `.env` file and add your configuration:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    ```env
+    DATABASE_URL=postgres://user:password@localhost:5432/ai_interview_platform
+    GEMINI_API_KEY=your_bard_ai_api_key
+    ```
+
+5. Start the development server:
+
+    ```bash
+    npm run dev
+    ```
+
+6. Open your browser and navigate to `http://localhost:3000`.
+
+## Usage
+
+1. Select a job description from the list.
+2. Answer the AI-generated interview questions.
+3. Receive instant feedback and sample responses.
+4. At the end of the interview, review the summary of your performance.
+
+## Contributing
+
+We welcome contributions! Please see our [Code of Conduct](./CODE_OF_CONDUCT.md) and [Contributing Guidelines](./CONTRIBUTING.md) for more details.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE.md](./LICENSE.md) file for details.
+
+## Acknowledgements
+
+Special thanks to [Interviews by AI](https://interviewsby.ai/) for inspiring this project.
+
+## Contact
+
+For any questions or feedback, please open an issue or contact us at [avinashgupta.works@gmail.com](mailto:avinashgupta.works@gmail.com).
