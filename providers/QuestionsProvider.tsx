@@ -30,6 +30,7 @@ interface QuestionContextType {
     currentQuestionData: ExtendedQuestionType | null;
     testId: string;
     pageLoading: boolean;
+    isTestSubmitted: boolean;
 }
 
 const QuestionContext = createContext<QuestionContextType | undefined>(
@@ -48,6 +49,7 @@ export default function QuestionProvider({ children }: QuestionProviderProps) {
     const [loading, setLoading] = useState<boolean>(false);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [questions, setQuestions] = useState<ExtendedQuestionType[]>([]);
+    const [isTestSubmitted, setIsTestSubmitted] = useState<boolean>(false);
     const [questionloading, setQuestionsLoading] = useState<boolean>(false);
 
     const generateFeedback = async ({
@@ -104,6 +106,11 @@ export default function QuestionProvider({ children }: QuestionProviderProps) {
                 const resp = await getTestById(testId);
 
                 setQuestions(resp?.questions || []);
+                const isSummaryPresent = Object.keys(resp?.summary)?.length
+                    ? true
+                    : false;
+
+                setIsTestSubmitted(isSummaryPresent);
             } catch (error) {
                 console.log(error);
             } finally {
@@ -128,6 +135,7 @@ export default function QuestionProvider({ children }: QuestionProviderProps) {
                 generateFeedback,
                 testId: testId as string,
                 pageLoading: questionloading,
+                isTestSubmitted,
             }}
         >
             {children}

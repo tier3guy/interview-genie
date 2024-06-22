@@ -14,6 +14,7 @@ export default function QuestionCard() {
         loading,
         currentQuestionIndex,
         nextQuestion,
+        isTestSubmitted,
     } = useQuestion();
     const [transcript, setTranscript] = useState<string>("");
 
@@ -41,17 +42,29 @@ export default function QuestionCard() {
                     transcript={transcript}
                     setTranscript={setTranscript}
                 />
-                {!currentQuestionData?.isAttempted && !loading && (
-                    <button className="cursor-pointer underline m-auto">
-                        Or, record your answer
-                    </button>
+                {!isTestSubmitted &&
+                    !currentQuestionData?.isAttempted &&
+                    !loading && (
+                        <button className="cursor-pointer underline m-auto">
+                            Or, record your answer
+                        </button>
+                    )}
+
+                {isTestSubmitted && (
+                    <ShimmerButton
+                        className="mt-4 py-2 px-8 shadow"
+                        onClick={nextQuestion}
+                    >
+                        Next Question
+                    </ShimmerButton>
                 )}
-                {loading ? (
+
+                {!isTestSubmitted && loading ? (
                     <TypingAnimation
                         text="Working on it ..."
                         className="text-lg font-normal mt-4"
                     />
-                ) : currentQuestionData?.isAttempted ? (
+                ) : currentQuestionData?.isAttempted && !isTestSubmitted ? (
                     <ShimmerButton
                         className="mt-4 py-2 px-8 shadow"
                         onClick={nextQuestion}
@@ -59,12 +72,14 @@ export default function QuestionCard() {
                         Next Question
                     </ShimmerButton>
                 ) : (
-                    <ShimmerButton
-                        className="mt-4 py-2 px-8 shadow"
-                        onClick={handleGetAIFeedback}
-                    >
-                        Get AI Feedback
-                    </ShimmerButton>
+                    !isTestSubmitted && (
+                        <ShimmerButton
+                            className="mt-4 py-2 px-8 shadow"
+                            onClick={handleGetAIFeedback}
+                        >
+                            Get AI Feedback
+                        </ShimmerButton>
+                    )
                 )}
             </div>
             <div className="bg-slate-50">

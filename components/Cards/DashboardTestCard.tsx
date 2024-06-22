@@ -1,12 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
 import { format } from "date-fns";
 import { Eye, Trash2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { TestType } from "@/types/test.type";
 import { deleteTestById } from "@/actions/tests";
 import DeleteInterviewCard from "./DeleteInterviewCard";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 
 export default function DashboardTestCard({ data }: { data: TestType }) {
+    const router = useRouter();
     const [deleting, setDeleting] = useState<boolean>(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
 
@@ -52,7 +54,12 @@ export default function DashboardTestCard({ data }: { data: TestType }) {
                         />
                     </Dialog>
 
-                    <button className="rounded-full h-10 w-10 grid place-content-center text-green-700 bg-green-600/10">
+                    <button
+                        onClick={() => {
+                            router.push(`/launch/${data.testId}/summary`);
+                        }}
+                        className="rounded-full h-10 w-10 grid place-content-center text-green-700 bg-green-600/10"
+                    >
                         <Eye className="h-5 w-5" />
                     </button>
                 </div>
