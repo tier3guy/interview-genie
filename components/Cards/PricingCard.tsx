@@ -1,6 +1,9 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import Badge from "../Badge";
 import ShimmerButton from "../magicui/shimmer-button";
+import { useAuth } from "@/providers/AuthProvider";
 
 interface Props {
     plan: "Basic" | "Pro";
@@ -9,6 +12,8 @@ interface Props {
 }
 
 export default function PricingCard({ plan, description, price }: Props) {
+    const { user } = useAuth();
+
     return (
         <div
             className={cn(
@@ -38,7 +43,9 @@ export default function PricingCard({ plan, description, price }: Props) {
                         </button>
                     ) : (
                         <ShimmerButton className="py-1 px-6">
-                            Login to Upgrade
+                            {user?.clerkId
+                                ? "Upgrade to Pro"
+                                : "Login to Upgrade"}
                         </ShimmerButton>
                     )}
                 </div>

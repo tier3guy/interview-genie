@@ -5,6 +5,6 @@ export interface TestType {
     jobDescription: string;
     createdAt: Date;
     questions: any[];
-    summary: any[];
+    summary: any;
     clerkId: string;
 }

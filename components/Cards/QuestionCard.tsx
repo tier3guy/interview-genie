@@ -41,7 +41,7 @@ export default function QuestionCard() {
                     transcript={transcript}
                     setTranscript={setTranscript}
                 />
-                {!currentQuestionData?.isAttempted && (
+                {!currentQuestionData?.isAttempted && !loading && (
                     <button className="cursor-pointer underline m-auto">
                         Or, record your answer
                     </button>

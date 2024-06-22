@@ -102,7 +102,6 @@ export default function QuestionProvider({ children }: QuestionProviderProps) {
                 setQuestionsLoading(true);
 
                 const resp = await getTestById(testId);
-                console.log(resp);
 
                 setQuestions(resp?.questions || []);
             } catch (error) {
