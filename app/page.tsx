@@ -9,6 +9,7 @@ import ShimmerButton from "@/components/magicui/shimmer-button";
 import AvatarCircles from "@/components/magicui/avatar-circles";
 import MicrophoneButton from "@/components/Buttons/MicrophoneButton";
 import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
+import SparklesText from "@/components/magicui/sparkles-text";
 
 const font = BricolageGrotesque({ subsets: ["latin"] });
 
@@ -28,7 +29,9 @@ export default function Home() {
             <div className="flex-1 flex flex-col items-center md:items-start justify-center md:justify-start">
                 <Badge label="#1 AI Interview Prep" />
                 <div className="mt-6">
-                    <h1
+                    <SparklesText text="Boost your confidence,  ace the job interview" />
+
+                    {/* <h1
                         className={cn(
                             "text-5xl text-black font-bold text-center md:text-start",
                             font.className
@@ -43,7 +46,7 @@ export default function Home() {
                         )}
                     >
                         ace the job interview
-                    </h1>
+                    </h1> */}
                 </div>
                 <p
                     className={cn(
