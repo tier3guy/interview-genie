@@ -1,11 +1,13 @@
 "use client";
 
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { jobDescriptions } from "@/constants";
+import { useAuth } from "@/providers/AuthProvider";
 import { Textarea } from "@/components/ui/textarea";
 import BadgeButton from "@/components/Buttons/Badge";
-import { useMockTest } from "@/providers/MockTestProvider";
+import { generateQuestions } from "@/actions/generateQuestion";
 import ShimmerButton from "@/components/magicui/shimmer-button";
 import TypingAnimation from "@/components/magicui/typing-animation";
 import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
@@ -15,22 +17,36 @@ const font = BricolageGrotesque({ subsets: ["latin"] });
 type JobRole = keyof typeof jobDescriptions;
 
 export default function LaunchInterview({ params }: any) {
+    const { user } = useAuth();
+    const router = useRouter();
     const jobRoles: JobRole[] = Object.keys(jobDescriptions) as JobRole[];
-
     const [selectedJobRole, setSelectedJobRole] = useState<JobRole>(
         jobRoles[0]
     );
     const [jd, setJd] = useState<string>(jobDescriptions[selectedJobRole]);
-    const { loading, generateQuestions, setTestId, setTitle } = useMockTest();
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const generateQuestionsHandler = async () => {
+        try {
+            setLoading(true);
+            const resp = await generateQuestions({
+                clerkId: user?.clerkId!,
+                testId: params.id,
+                title: selectedJobRole,
+                jobDescription: jd,
+            });
+            if (resp?.status === 200) {
+                router.push(`/launch/${params.id}/questions`);
+            }
+        } catch (error) {
+            console.log(error);
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
-        if (params) setTestId(params.id);
-    }, [params, setTestId]);
-
-    useEffect(() => {
-        setTitle(selectedJobRole);
         setJd(jobDescriptions[selectedJobRole]);
-    }, [selectedJobRole, setTitle]);
+    }, [selectedJobRole]);
 
     return (
         <main className="py-10">
@@ -75,11 +91,7 @@ export default function LaunchInterview({ params }: any) {
                             className="text-lg font-normal"
                         />
                     ) : (
-                        <ShimmerButton
-                            onClick={() => {
-                                generateQuestions({ jobDescription: jd });
-                            }}
-                        >
+                        <ShimmerButton onClick={generateQuestionsHandler}>
                             <p>Generate Questions</p>
                         </ShimmerButton>
                     )}

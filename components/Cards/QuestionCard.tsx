@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import AnswerArea from "../AnswerArea";
-import { useMockTest } from "@/providers/MockTestProvider";
-import QuestionCardAccordion from "../QuestionCardAccordion";
+import { useEffect, useState } from "react";
 import ShimmerButton from "../magicui/shimmer-button";
 import TypingAnimation from "../magicui/typing-animation";
+import { useQuestion } from "@/providers/QuestionsProvider";
+import QuestionCardAccordion from "../QuestionCardAccordion";
 
 export default function QuestionCard() {
     const {
@@ -14,7 +14,7 @@ export default function QuestionCard() {
         loading,
         currentQuestionIndex,
         nextQuestion,
-    } = useMockTest();
+    } = useQuestion();
     const [transcript, setTranscript] = useState<string>("");
 
     const handleGetAIFeedback = async () => {

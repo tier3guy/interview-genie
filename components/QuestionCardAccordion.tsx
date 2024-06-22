@@ -1,17 +1,17 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
-import { cn } from "@/lib/utils";
-import { useMockTest } from "@/providers/MockTestProvider";
 import { useEffect, useState } from "react";
+import { useQuestion } from "@/providers/QuestionsProvider";
 
 export default function QuestionCardAccordion() {
-    const { currentQuestionData } = useMockTest();
+    const { currentQuestionData } = useQuestion();
     const [openItems, setOpenItems] = useState<string[]>([]);
 
     useEffect(() => {
