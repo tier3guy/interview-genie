@@ -29,6 +29,7 @@ export default function Dashboard() {
 
         const fetchTests = async () => {
             const response = await getAllTest(user?.clerkId);
+
             setTests(response as any);
         };
 

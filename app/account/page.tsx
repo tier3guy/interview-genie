@@ -6,12 +6,16 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { SignOutButton, useUser } from "@clerk/nextjs";
 import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
+import { useAuth } from "@/providers/AuthProvider";
+import { Plans } from "@/constants";
 
 const font = BricolageGrotesque({ subsets: ["latin"] });
 
 export default function Account() {
+    const { user: usr } = useAuth();
     const { isLoaded, user } = useUser();
     const mailId = user?.emailAddresses?.[0].emailAddress;
+    const currentPlan = usr?.isSubscribed ? Plans[1] : Plans[0];
 
     return (
         <main className="py-10">
@@ -74,26 +78,28 @@ export default function Account() {
                             >
                                 Plan
                             </h3>
-                            <Link href={"/pricing"}>
-                                <p className="underline text-sm cursor-pointer">
-                                    Upgrade to Pro
-                                </p>
-                            </Link>
+                            {!usr?.isSubscribed && (
+                                <Link href={"/pricing"}>
+                                    <p className="underline text-sm cursor-pointer">
+                                        Upgrade to Pro
+                                    </p>
+                                </Link>
+                            )}
                         </div>
                         <p className="font-semibold">Current plan</p>
                         <div className="border mt-2 p-4 flex flex-col md:flex-row md:items-center gap-8 justify-between rounded-md">
                             <div>
                                 <h2 className="font-bold text-lg text-black">
-                                    Basic
+                                    {currentPlan?.planName}
                                 </h2>
-                                <p>3 questions / month (3 left)</p>
+                                <p>{currentPlan?.description}</p>
                             </div>
                             <div>
                                 <p className="flex items-center">
-                                    <span className="text-4xl font-bold text-black">
-                                        $0
+                                    <span className="text-4xl font-bold text-black me-1">
+                                        ₹{currentPlan?.price}
                                     </span>
-                                    /month
+                                    {" / " + currentPlan?.validity}
                                 </p>
                             </div>
                         </div>

@@ -10,4 +10,5 @@ export interface UserType {
     subscriptionKey: string | null;
     unsubscribedAt: Date | null;
     tests: object[];
+    testsLimit: number;
 }

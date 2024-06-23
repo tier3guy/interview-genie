@@ -6,24 +6,18 @@ import {
     PaymentElement,
 } from "@stripe/react-stripe-js";
 import { useState, useEffect } from "react";
+import { updateUserField } from "@/actions/users";
+import { useAuth } from "@/providers/AuthProvider";
 import ShimmerButton from "../magicui/shimmer-button";
+import { BillingFormType } from "@/types/billing-form.type";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
-interface FormStateProps {
-    name: string;
-    country: string;
-    address1: string;
-    address2: string;
-    city: string;
-    state: string;
-    zip: string;
-}
-
 interface Props {
-    formState: FormStateProps;
+    formState: BillingFormType;
 }
 
 export default function CheckoutCard({ formState }: Props) {
+    const { user } = useAuth();
     const stripe = useStripe();
     const elements = useElements();
 
@@ -53,6 +47,7 @@ export default function CheckoutCard({ formState }: Props) {
 
             const return_url = `${window.location.origin}/payment-success?amount=${APPLICATION_FEES}`;
 
+            await updateUserField(user?.clerkId!, "isSubscribed", true);
             const { error } = await stripe.confirmPayment({
                 elements,
                 clientSecret,
@@ -62,6 +57,7 @@ export default function CheckoutCard({ formState }: Props) {
             });
 
             if (error) {
+                await updateUserField(user?.clerkId!, "isSubscribed", false);
                 setError(error.message as string);
             } else {
             }

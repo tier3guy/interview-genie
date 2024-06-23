@@ -65,7 +65,13 @@ export default function AuthProvider({
     }, [clerkUser.user]);
 
     return (
-        <AuthContext.Provider value={{ user, loading, error }}>
+        <AuthContext.Provider
+            value={{
+                user,
+                loading,
+                error,
+            }}
+        >
             {children}
         </AuthContext.Provider>
     );

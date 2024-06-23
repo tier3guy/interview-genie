@@ -211,3 +211,21 @@ export const indianStates: string[] = [
     "Uttarakhand",
     "West Bengal",
 ];
+
+export const Plans = [
+    {
+        planName: "Basic",
+        description: "3 Tests for the trial",
+        price: 0,
+        recommended: false,
+        validity: "month",
+    },
+    {
+        planName: "Pro",
+        description: "Unlimited Tests",
+        price: 99,
+        validity: "lifetime",
+        recommended: true,
+        pro: true,
+    },
+];

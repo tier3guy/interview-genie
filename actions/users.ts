@@ -23,3 +23,18 @@ export async function getUserById(
 
     return users.length > 0 ? users[0] : null;
 }
+
+export async function updateUserField(
+    clerkId: string,
+    field: keyof InsertUser,
+    value: InsertUser[keyof InsertUser]
+) {
+    const resp = await db
+        .update(userTable)
+        .set({ [field]: value })
+        //@ts-ignore
+        .where(eq(userTable.clerkId, clerkId))
+        .execute();
+
+    return resp ? true : false;
+}

@@ -3,12 +3,15 @@
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { getAllTest } from "@/actions/tests";
 import { jobDescriptions } from "@/constants";
+import { Dialog } from "@/components/ui/dialog";
 import { useAuth } from "@/providers/AuthProvider";
 import { Textarea } from "@/components/ui/textarea";
 import BadgeButton from "@/components/Buttons/Badge";
 import { generateQuestions } from "@/actions/generateQuestion";
 import ShimmerButton from "@/components/magicui/shimmer-button";
+import LimitExceededCard from "@/components/Cards/LimitExeededCard";
 import TypingAnimation from "@/components/magicui/typing-animation";
 import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
 
@@ -25,10 +28,19 @@ export default function LaunchInterview({ params }: any) {
     );
     const [jd, setJd] = useState<string>(jobDescriptions[selectedJobRole]);
     const [loading, setLoading] = useState<boolean>(false);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const generateQuestionsHandler = async () => {
+        setLoading(true);
+
+        const testsTaken = (await getAllTest(user?.clerkId!)).length;
+        if (!user?.isSubscribed && testsTaken >= user?.testsLimit!) {
+            setLoading(false);
+            setModalOpen(true);
+            return;
+        }
+
         try {
-            setLoading(true);
             const resp = await generateQuestions({
                 clerkId: user?.clerkId!,
                 testId: params.id,
@@ -91,9 +103,12 @@ export default function LaunchInterview({ params }: any) {
                             className="text-lg font-normal"
                         />
                     ) : (
-                        <ShimmerButton onClick={generateQuestionsHandler}>
-                            <p>Generate Questions</p>
-                        </ShimmerButton>
+                        <Dialog open={modalOpen} onOpenChange={setModalOpen}>
+                            <ShimmerButton onClick={generateQuestionsHandler}>
+                                <p>Generate Questions</p>
+                            </ShimmerButton>
+                            <LimitExceededCard />
+                        </Dialog>
                     )}
                 </div>
             </div>

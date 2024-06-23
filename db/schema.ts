@@ -26,6 +26,7 @@ export const userTable = pgTable("users", {
     subscriptionKey: text("subscriptionKey"),
     unsubscribedAt: timestamp("unsubscribedAt"),
     tests: jsonb("tests").default([]),
+    testsLimit: integer("testsLimit").default(3),
 });
 
 // Tests Table

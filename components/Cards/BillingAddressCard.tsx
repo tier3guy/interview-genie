@@ -9,20 +9,11 @@ import {
     SelectContent,
     SelectItem,
 } from "@/components/ui/select";
+import { BillingFormType } from "@/types/billing-form.type";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 
-interface FormStateProps {
-    name: string;
-    country: string;
-    address1: string;
-    address2: string;
-    city: string;
-    state: string;
-    zip: string;
-}
-
 interface Props {
-    formState: FormStateProps;
+    formState: BillingFormType;
     handleChange: (field: string, value: string) => void;
 }
 
