@@ -42,13 +42,13 @@ export default function QuestionCard() {
                     transcript={transcript}
                     setTranscript={setTranscript}
                 />
-                {!isTestSubmitted &&
+                {/* {!isTestSubmitted &&
                     !currentQuestionData?.isAttempted &&
                     !loading && (
                         <button className="cursor-pointer underline m-auto">
                             Or, record your answer
                         </button>
-                    )}
+                    )} */}
 
                 {isTestSubmitted && (
                     <ShimmerButton
