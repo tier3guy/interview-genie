@@ -1,5 +1,5 @@
-import PricingCard from "@/components/Cards/PricingCard";
 import { cn } from "@/lib/utils";
+import PricingCard from "@/components/Cards/PricingCard";
 import { Bricolage_Grotesque as BricolageGrotesque } from "next/font/google";
 
 const font = BricolageGrotesque({ subsets: ["latin"] });

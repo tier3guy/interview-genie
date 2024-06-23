@@ -15,6 +15,13 @@
       "when": 1718979707725,
       "tag": "0001_broad_vindicator",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1719134756416,
+      "tag": "0002_clever_grey_gargoyle",
+      "breakpoints": true
     }
   ]
 }

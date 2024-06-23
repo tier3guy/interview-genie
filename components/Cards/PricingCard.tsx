@@ -1,9 +1,10 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import Badge from "../Badge";
-import ShimmerButton from "../magicui/shimmer-button";
+import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/providers/AuthProvider";
+import ShimmerButton from "../magicui/shimmer-button";
 
 interface Props {
     plan: "Basic" | "Pro";
@@ -12,7 +13,16 @@ interface Props {
 }
 
 export default function PricingCard({ plan, description, price }: Props) {
+    const router = useRouter();
     const { user } = useAuth();
+
+    const handleUpgrade = () => {
+        if (user?.clerkId) {
+            router.push("/checkout");
+        } else {
+            router.push("/sign-in");
+        }
+    };
 
     return (
         <div
@@ -42,7 +52,10 @@ export default function PricingCard({ plan, description, price }: Props) {
                             Current Plan
                         </button>
                     ) : (
-                        <ShimmerButton className="py-1 px-6">
+                        <ShimmerButton
+                            className="py-1 px-6"
+                            onClick={handleUpgrade}
+                        >
                             {user?.clerkId
                                 ? "Upgrade to Pro"
                                 : "Login to Upgrade"}
